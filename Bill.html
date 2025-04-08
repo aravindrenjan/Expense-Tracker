@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css" />
+    <style>
+      .narrow {
+        margin-bottom: 0.5rem;
+      }
+    </style>
+    <script>
+      function SubmitRecord() {
+        console.log("Submit button clicked!");  // Debugging log
+        document.getElementById("displayReturn").innerHTML = "";
+        var PurchaseDate = document.getElementById("PurchaseDate").value;
+        var Item = document.getElementById("Item").value;
+        var Shop = document.getElementById("Shop").value;
+        var Price = document.getElementById("Price").value;
+        var Quantity = document.getElementById("Quantity").value;
+        var Cost = document.getElementById("Cost").value;
+        
+        google.script.run.withSuccessHandler(returnBack)
+        .AddRecord(PurchaseDate, Item, Shop, Price, Quantity, Cost);
+      }
+
+      function returnBack(stringBack) {
+        console.log("Response from server:", stringBack);
+        document.getElementById("displayReturn").innerHTML = stringBack;
+        document.getElementById("PurchaseDate").value = '';
+        document.getElementById("Item").value = '';
+        document.getElementById("Shop").value = '';
+        document.getElementById("Price").value = '';
+        document.getElementById("Quantity").value = '';
+        document.getElementById("Cost").value = '';
+      }
+    </script>
+  </head>
+  <body>
+    <form>
+      <div style="padding: 10px">
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="PurchaseDate" style="margin-bottom: 0rem">Date</label>
+            <input type="text" id="PurchaseDate" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="Item" style="margin-bottom: 0rem">Item</label>
+            <input type="text" id="Item" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="Shop" style="margin-bottom: 0rem">Shop</label>
+            <input type="text" id="Shop" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="Price" style="margin-bottom: 0rem">Price</label>
+            <input type="text" id="Price" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="Quantity" style="margin-bottom: 0rem">Quantity</label>
+            <input type="text" id="Quantity" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <label for="Cost" style="margin-bottom: 0rem">Cost</label>
+            <input type="text" id="Cost" class="form-control" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6 narrow">
+            <input type="button" value="Submit" onclick="SubmitRecord()" class="btn btn-primary" />
+          </div>
+        </div>
+      </div>
+    </form>
+    <div id="displayReturn"></div>
+  </body>
+</html>
